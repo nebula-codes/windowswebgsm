@@ -1,0 +1,16 @@
+﻿@using windowswebgsm.Data.Models
+<footer style="padding-right:5em; bottom:0; position:fixed; padding-left:1em;">
+    <p style="float:right;">Build: @version</p>
+</footer>
+
+
+@code {
+    string version;
+
+
+    protected override void OnInitialized()
+    {
+        WWGSM instance = new WWGSM();
+        version = instance.Version;
+    }
+}
