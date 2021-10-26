@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>windowswebgsm</name>
+    </assembly>
+    <members>
+        <member name="T:windowswebgsm.Data.Models.WWGSM">
+            <Summary>
+             Windows Web GSM Instance Information
+            </Summary>
+        </member>
+        <member name="P:windowswebgsm.Data.Models.WWGSM.Version">
+            <summary>
+            WWGSM Instance Version
+            </summary>
+        </member>
+        <member name="P:windowswebgsm.Data.Models.WWGSM.MAX_SERVER">
+            <summary>
+            Maximum Server Count
+            </summary>
+        </member>
+    </members>
+</doc>
