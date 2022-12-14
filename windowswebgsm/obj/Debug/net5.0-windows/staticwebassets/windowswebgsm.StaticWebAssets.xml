@@ -1,4 +1,4 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/" Path="C:\Users\Panda\source\repos\windowswebgsm\obj\Debug\net5.0-windows\scopedcss\bundle\" />
+  <ContentRoot BasePath="/" Path="C:\Users\Panda\Documents\Dev\web\windowswebgsm\obj\Debug\net5.0-windows\scopedcss\bundle\" />
   <ContentRoot BasePath="_content/MudBlazor" Path="C:\Users\Panda\.nuget\packages\mudblazor\5.1.5\build\..\staticwebassets\" />
 </StaticWebAssets>

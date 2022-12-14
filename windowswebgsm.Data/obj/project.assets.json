@@ -5802,11 +5802,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Panda\\Documents\\dev\\wwgsm\\windowswebgsm.Data\\windowswebgsm.Data.csproj",
+      "projectUniqueName": "C:\\Users\\Panda\\Documents\\Dev\\web\\windowswebgsm.Data\\windowswebgsm.Data.csproj",
       "projectName": "windowswebgsm.Data",
-      "projectPath": "C:\\Users\\Panda\\Documents\\dev\\wwgsm\\windowswebgsm.Data\\windowswebgsm.Data.csproj",
+      "projectPath": "C:\\Users\\Panda\\Documents\\Dev\\web\\windowswebgsm.Data\\windowswebgsm.Data.csproj",
       "packagesPath": "C:\\Users\\Panda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Panda\\Documents\\dev\\wwgsm\\windowswebgsm.Data\\obj\\",
+      "outputPath": "C:\\Users\\Panda\\Documents\\Dev\\web\\windowswebgsm.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Panda\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5867,7 +5867,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.2.21505.57\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

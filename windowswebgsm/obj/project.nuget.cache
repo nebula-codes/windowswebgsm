@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9pZjCRTZ0/W6+zk+xNGvkzh3+lCdg6PwlxIlPOM2hM3el03uIzGhUhLXs5L6Mbi4tFvmbL1gOV12/6ooN6Q6PA==",
+  "dgSpecHash": "0FbQ30t2I61tvp2rLynhwDcaE7zlG+k2s2JfU6SWj02ofmazuSElllcZAUIzhWAHxi6zR8GU8rkt0FFEvy+27A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Panda\\Documents\\dev\\wwgsm\\windowswebgsm\\windowswebgsm.csproj",
+  "projectFilePath": "C:\\Users\\Panda\\Documents\\Dev\\web\\windowswebgsm\\windowswebgsm.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Panda\\.nuget\\packages\\bytesize\\2.1.0\\bytesize.2.1.0.nupkg.sha512",
     "C:\\Users\\Panda\\.nuget\\packages\\microsoft.aspnetcore.authorization\\5.0.10\\microsoft.aspnetcore.authorization.5.0.10.nupkg.sha512",

@@ -13,106 +13,78 @@ namespace windowswebgsm.Shared.Components
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 1 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 2 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 3 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 4 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 5 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 6 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 7 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 8 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 9 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using windowswebgsm;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 10 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using windowswebgsm.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "C:\Users\Panda\source\repos\windowswebgsm\_Imports.razor"
+#line 11 "C:\Users\Panda\Documents\Dev\web\windowswebgsm\_Imports.razor"
 using MudBlazor;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 1 "C:\Users\Panda\source\repos\windowswebgsm\Shared\Components\ServerTable.razor"
-using System.Net.Http.Json;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 2 "C:\Users\Panda\source\repos\windowswebgsm\Shared\Components\ServerTable.razor"
-using System.Threading;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 3 "C:\Users\Panda\source\repos\windowswebgsm\Shared\Components\ServerTable.razor"
-using windowswebgsm.Data;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\Panda\source\repos\windowswebgsm\Shared\Components\ServerTable.razor"
-using windowswebgsm.Data.Models;
 
 #line default
 #line hidden
@@ -124,113 +96,6 @@ using windowswebgsm.Data.Models;
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 73 "C:\Users\Panda\source\repos\windowswebgsm\Shared\Components\ServerTable.razor"
-       
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = true;
-    private bool bordered = true;
-    private string searchString1 = "";
-    private string searchString2 = "";
-    private Server selectedItem1 = null;
-    private Server selectedItem2 = null;
-
-    private HashSet<Server> selectedItems = new HashSet<Server>();
-    private string selectedItemsString = "";
-    private IEnumerable<Server> Servers = new List<Server>();
-
-
-
-    protected override void OnInitialized()
-    {
-        Servers = GetGameServers();
-        foreach(var server in Servers)
-        {
-            server.FormattedUptime = TimeSpan.FromSeconds(server.Uptime).ToString(@"hh\:mm\:ss");
-        }
-        StartLoop();
-    }
-
-    private int Count { get; set; } = 10;
-
-    void StartLoop()
-    {
-        var timer = new Timer(new TimerCallback(_ =>
-        {
-            foreach(var server in Servers)
-            {
-                server.Uptime += 1;
-                server.FormattedUptime = TimeSpan.FromSeconds(server.Uptime).ToString(@"hh\:mm\:ss");
-            }
-
-            InvokeAsync(() =>
-            {
-
-                StateHasChanged();
-            });
-
-        }), null, 1000, 1000);
-    }
-
-
-
-    private bool FilterFunc1(Server server) => FilterFunc(server, searchString1);
-    private bool FilterFunc2(Server server) => FilterFunc(server, searchString2);
-
-    private bool FilterFunc(Server server, string searchString)
-    {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (server.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{server.Address}".Contains(searchString))
-            return true;
-        return false;
-    }
-
-    private IEnumerable<Server> GetGameServers()
-    {
-        var context = new ServerContext();
-
-        var servers = context.Servers.ToList();
-
-        return servers;
-    }
-
-
-
-
-    private void StartServer(string servers)
-    {
-        Snackbar.Configuration.SnackbarVariant = Variant.Filled;
-        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
-        Snackbar.Configuration.HideTransitionDuration = 500;
-        Snackbar.Configuration.ShowTransitionDuration = 500;
-
-        selectedItemsString = "";
-        selectedItemsString += string.Join(", ", selectedItems.OrderBy(x=>x.Name).Select(x=>x.Name));
-
-
-        Snackbar.Add($"Following Servers are starting: {selectedItemsString}", Severity.Success);
-    }
-
-    private void StopServer()
-    {
-
-
-    }
-
-    private void RestartServer()
-    {
-        
-    }
-
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private ISnackbar Snackbar { get; set; }
     }
 }
 #pragma warning restore 1591
