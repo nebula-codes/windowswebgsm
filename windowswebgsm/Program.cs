@@ -5,6 +5,7 @@ using windowswebgsm.Data;
 using MudBlazor.Services;
 using windowswebgsm.data;
 using Microsoft.EntityFrameworkCore;
+using windowswebgsm.data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddMudServices();
+builder.Services.AddScoped<GameServerService>();
+
+
 
 #region Connection String
 builder.Services.AddDbContext<AppDbContext>(options =>

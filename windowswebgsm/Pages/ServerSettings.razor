@@ -1,7 +1,81 @@
-﻿@page "/server"
+﻿@page "/servers/{id}"
+@using windowswebgsm.Data
+@using windowswebgsm.Pages.Components
+@using windowswebgsm.data.Services
+@layout ServerSettingsLayout
+@inject GameServerService gameServerService
 
-<h3>ServerSettings</h3>
+@if (@server != null)
+{
+    <CascadingValue Value=@server>
+
+        <MudGrid>
+           
+           
+
+            <MudItem xs="4" sm="4">
+                 <ServerDetailsCard></ServerDetailsCard>
+            </MudItem>
+            <MudItem xs="8" sm="8">
+                 <ServerDetailsCard></ServerDetailsCard>
+            </MudItem>
+
+             <MudItem xs="12" sm="12">
+                 <MudPaper Elevation="25">
+                    <MudToolBar>
+                        <MudIconButton Icon="@Icons.Material.Outlined.PlayArrow" Color="Color.Success" />
+                        <MudIconButton Icon="@Icons.Material.Outlined.Stop" Color="Color.Error" />
+                        <MudIconButton Icon="@Icons.Material.Outlined.RestartAlt" Color="Color.Info"/>
+                        <MudSpacer />
+                        <MudText>@server.Players / @server.MaxPlayers</MudText>
+                        <MudIconButton Icon="@Icons.Material.Outlined.PushPin" />
+                        <MudIconButton Icon="@Icons.Material.Outlined.PeopleAlt" />
+                        <MudText>@server.Uptime</MudText>
+                    </MudToolBar>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+
+
+       
+    </CascadingValue>
+}
+else
+{
+    <MudCard Style="background:#27293d">
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="40px" Width="40px" Style="background:#1e1e2f"/>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudSkeleton Animation="Animation.Wave" Width="40%" Style="background:#1e1e2f"/>
+            <MudSkeleton Animation="Animation.Wave" Width="60%" Style="background:#1e1e2f"/>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudSkeleton SkeletonType="SkeletonType.Rectangle" Animation="Animation.Wave" Height="250px" Style="background:#1e1e2f"/>
+    <MudCardContent>
+        <MudSkeleton Animation="Animation.Wave" Style="background:#1e1e2f"/>
+    </MudCardContent>
+    <MudCardActions>
+        <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="30px" Width="30px" Class="ml-2 mb-2" Style="background:#1e1e2f"/>
+        <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="30px" Width="30px" Class="ml-3 mb-2" Style="background:#1e1e2f"/>
+    </MudCardActions>
+</MudCard>
+}
+
+
+
 
 @code {
+    [Parameter]
+    public string id { get; set; }
 
+    private GameServer server { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        server = await Task.Run(() => gameServerService.GetGameServerById(id));
+    }
 }

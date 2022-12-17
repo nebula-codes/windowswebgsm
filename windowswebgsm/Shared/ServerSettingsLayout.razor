@@ -1,4 +1,4 @@
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @using windowswebgsm.Data
 @using windowswebgsm.data.Services
 @inject GameServerService gameServerService
@@ -20,21 +20,15 @@
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">WindowsWebGSM</MudText>
         </MudDrawerHeader>
-        <ServersNavMenu/>
+        <ServerSettingsNavMenu/>
     </MudDrawer>
 
     
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="my-4 pt-4">
-            @if (@Servers == null)
-            {
-                    <MudSkeleton></MudSkeleton>
-                } else
-                {
-                   @Body 
-                }
-                
-           
+
+            @Body 
+
             
         </MudContainer>
     </MudMainContent>
@@ -80,6 +74,6 @@
 
     protected override async Task OnInitializedAsync(){
         _isDark = false;
-        Servers = await Task.Run(() => gameServerService.GetAllGameServersAsync());
+        
     }
 }

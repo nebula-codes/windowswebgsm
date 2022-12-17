@@ -27,11 +27,11 @@ namespace windowswebgsm.data.Services
         #endregion
 
         #region Fetching Logic
-        public async Task<List<GameServer>> GetAllGameServers()
+        public async Task<List<GameServer>> GetAllGameServersAsync()
         {
             return await _appDbContext.GameServers.ToListAsync();
         }
-        public async Task<GameServer> GetGameServerById(int id)
+        public async Task<GameServer> GetGameServerById(string id)
         {
             GameServer gameServer = await _appDbContext.GameServers.FirstOrDefaultAsync(c => c.ID.Equals(id));
             return gameServer;

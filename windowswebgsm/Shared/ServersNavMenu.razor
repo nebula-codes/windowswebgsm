@@ -1,4 +1,5 @@
-﻿@using windowswebgsm.Data
+﻿@inject NavigationManager UriHelper
+@using windowswebgsm.Data
 
 
 <MudNavMenu Margin="Margin.Dense" Class="pa-2" Rounded="true">
@@ -8,7 +9,7 @@
         
     @foreach (GameServer server in Servers)
     {
-        <MudNavLink Href="/server" Icon="@Icons.Filled.Storage">@server.Name</MudNavLink>
+        <MudNavLink @onclick="( () => Navigate(server.ID))" Icon="@Icons.Filled.Storage">@server.Name</MudNavLink>
     }
 
 </MudNavMenu>
@@ -17,4 +18,9 @@
 @code {
     [CascadingParameter]
     public IEnumerable<GameServer> Servers { get; set; }
+
+    void Navigate(string id)
+    {
+        UriHelper.NavigateTo($"servers/{id}");
+    }
 }
