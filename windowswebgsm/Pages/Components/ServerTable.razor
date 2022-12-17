@@ -1,0 +1,172 @@
+﻿
+@using windowswebgsm.Data
+@using System.Text.Json
+@using System.Net.Http.Json
+@inject ISnackbar Snackbar
+
+
+<style type="text/css">
+    .mud-checkbox-input {
+        border: white;
+    }
+
+  
+</style>
+
+
+<MudPaper Style="margin-bottom:1em; margin-top:1em; padding:10px;">
+
+
+    <MudButton Variant="Variant.Filled" OnClick="@(() => StartServer(@selectedItemsString))" StartIcon="@Icons.Material.Filled.PlayArrow" Color="Color.Success">Start</MudButton>
+    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Stop" Color="Color.Warning">Stop</MudButton>
+    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.RestartAlt" Color="Color.Info">Restart</MudButton>
+    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.StopCircle" Color="Color.Error">Kill</MudButton>
+
+
+
+    <div style="float:right;">
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Monitor" Color="Color.Dark">Toggle Console</MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Update" Color="Color.Dark">Update</MudButton>
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Backup" Color="Color.Dark">Backup</MudButton>
+    </div>
+
+</MudPaper>
+
+
+<MudTable MultiSelection="true" Items="@Servers" Square="@square" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<GameServer,bool>(FilterFunc1)" @bind-SelectedItems="selectedItems">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Game Servers</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>ID</MudTh>
+        <MudTh>PID</MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<GameServer, object>(x=>x.Status)">Status</MudTableSortLabel></MudTh>
+        <MudTh>Name</MudTh>
+        <MudTh>IP Address</MudTh>
+        <MudTh>Port</MudTh>
+        <MudTh>Query Port</MudTh>
+        <MudTh>Map</MudTh>
+        <MudTh>Players</MudTh>
+        <MudTh>Uptime</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="ID">@context.ID</MudTd>
+        <MudTd DataLabel="PID">@context.PID</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="IP Address">@context.Address</MudTd>
+        <MudTd DataLabel="Port">@context.Port</MudTd>
+        <MudTd DataLabel="Query Port">@context.QueryPort</MudTd>
+        <MudTd DataLabel="Map">@context.Map</MudTd>
+        <MudTd DataLabel="Players">@context.Players / @context.MaxPlayers</MudTd>
+        <MudTd DataLabel="Uptime">@context.FormattedUptime</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+<div class="d-flex flex-wrap mt-4">
+    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSpacer />
+    <div style="min-width:200px;">
+        <MudText Inline="true">Selected items: @(selectedItems==null ? "" : string.Join(", ", selectedItems.OrderBy(x=>x.Name).Select(x=>x.Name)))</MudText>
+    </div>
+</div>
+
+
+@code {
+    [CascadingParameter]
+    public IEnumerable<GameServer> Servers { get; set; }
+
+
+    private bool square = true;
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+    private string searchString1 = "";
+    private string searchString2 = "";
+    private Data.GameServer selectedItem1 = null;
+    private Data.GameServer selectedItem2 = null;
+
+    private HashSet<GameServer> selectedItems = new HashSet<GameServer>();
+    private string selectedItemsString = "";
+
+
+
+    private bool FilterFunc1(Data.GameServer server) => FilterFunc(server, searchString1);
+    private bool FilterFunc2(Data.GameServer server) => FilterFunc(server, searchString2);
+
+    private bool FilterFunc(Data.GameServer server, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (server.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{server.Address}".Contains(searchString))
+            return true;
+        return false;
+    }
+
+
+
+    private void StartServer(string servers)
+    {
+        Snackbar.Configuration.SnackbarVariant = Variant.Filled;
+        Snackbar.Configuration.MaxDisplayedSnackbars = 10;
+        Snackbar.Configuration.HideTransitionDuration = 500;
+        Snackbar.Configuration.ShowTransitionDuration = 500;
+
+        selectedItemsString = "";
+        selectedItemsString += string.Join(", ", selectedItems.OrderBy(x=>x.Name).Select(x=>x.Name));
+
+
+        Snackbar.Add($"Following Servers are starting: {selectedItemsString}", Severity.Success);
+    }
+
+    private void StopServer()
+    {
+
+
+    }
+
+    private void RestartServer()
+    {
+
+    }
+
+    protected override void OnInitialized()
+    {
+       
+        
+        StartLoop();
+    }
+
+    private int Count { get; set; } = 10;
+
+    void StartLoop()
+    {
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+            foreach(var server in Servers)
+            {
+                server.Uptime += 1;
+                server.FormattedUptime = TimeSpan.FromSeconds(server.Uptime).ToString(@"hh\:mm\:ss");
+            }
+
+            InvokeAsync(() =>
+            {
+
+                StateHasChanged();
+            });
+
+        }), null, 1000, 1000);
+    }
+}
+

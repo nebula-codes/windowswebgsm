@@ -1,0 +1,103 @@
+@inherits LayoutComponentBase
+@using windowswebgsm.Data
+
+<MudThemeProvider @bind-IsDarkMode="@_isDark" Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank" />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" />
+    </MudAppBar>
+
+    <CascadingValue Value="@Servers">
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">WindowsWebGSM</MudText>
+        </MudDrawerHeader>
+        <ServersNavMenu/>
+    </MudDrawer>
+
+    
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="my-4 pt-4">
+            
+                @Body
+           
+            
+        </MudContainer>
+    </MudMainContent>
+     </CascadingValue>
+</MudLayout>
+
+@code {
+
+
+
+    bool _drawerOpen = true;
+    MudTheme _theme = new MudTheme()
+        {
+            Palette = new Palette()
+            {
+                Background = "#1e1e2f",
+                DrawerBackground = "#27293d",
+                AppbarBackground = "#27293d",
+                TextPrimary = "#a7a7aa",
+                DrawerText = "#a7a7aa",
+                DrawerIcon = "#a7a7aa",
+                Surface = "#27293d",
+                TableLines = "#a7a7aa",
+                LinesDefault = "#1e1e2f",
+                
+                
+        },
+
+        LayoutProperties = new LayoutProperties()
+        {
+            DrawerWidthLeft = "260px",
+            DrawerWidthRight = "300px"
+        }
+    };
+    bool _isDark;
+
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    protected override async Task OnInitializedAsync(){
+        _isDark = false;
+        
+    }
+
+    public IEnumerable<GameServer> Servers = new List<GameServer>();
+
+    protected override void OnInitialized()
+    {
+        Servers = GetGameServers();
+        foreach(var server in Servers)
+        {
+            server.FormattedUptime = TimeSpan.FromSeconds(server.Uptime).ToString(@"hh\:mm\:ss");
+        }
+    }
+
+
+    private IEnumerable<Data.GameServer> GetGameServers()
+    {
+        // var context = new ServerContext();
+        Data.GameServer server = new GameServer();
+        server.Address = "10.24.204.7";
+        server.ID = "1";
+        server.Name = "Ark: Survival Evolved";
+        
+        // var servers = context.Servers.ToList();
+
+        var servers = server.getGeneratedServers();
+
+        return servers;
+    }
+}

@@ -1,0 +1,20 @@
+﻿@using windowswebgsm.Data
+
+
+<MudNavMenu Margin="Margin.Dense" Class="pa-2" Rounded="true">
+
+        <MudSpacer/>
+        <MudNavLink Href="/" Icon="@Icons.Filled.ArrowBack">Home</MudNavLink>
+        
+    @foreach (GameServer server in Servers)
+    {
+        <MudNavLink Href="/server" Icon="@Icons.Filled.Storage">@server.Name</MudNavLink>
+    }
+
+</MudNavMenu>
+
+
+@code {
+    [CascadingParameter]
+    public IEnumerable<GameServer> Servers { get; set; }
+}

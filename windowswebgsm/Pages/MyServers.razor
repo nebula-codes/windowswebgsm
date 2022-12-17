@@ -1,0 +1,22 @@
+@page "/servers"
+@using windowswebgsm.Data
+@layout ServersLayout
+
+
+
+<MudBreadcrumbs Items="_items"></MudBreadcrumbs>
+<MudText Typo="Typo.h5">Game Server Manager Dashboard</MudText>
+<windowswebgsm.Pages.Components.ServerTable/>
+
+
+@code {
+
+
+    private List<BreadcrumbItem> _items = new List<BreadcrumbItem>();
+
+    protected override void OnInitialized()
+    {
+        _items.Add(new BreadcrumbItem("Home", href: "/"));
+        _items.Add(new BreadcrumbItem("My Servers", href: "/servers"));
+    }
+}
