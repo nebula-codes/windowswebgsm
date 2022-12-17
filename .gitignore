@@ -1,2 +1,8 @@
 
+windowswebgsm/bin/
+windowswebgsm/obj/
+windowswebgsm/.vs/
+windowswebgsm.data/bin/
+windowswebgsm.data/obj/
+windowswebgsm.data/.vs/
 windowswebgsm/appsettings.json
