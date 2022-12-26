@@ -20,6 +20,9 @@
         }
 
         public string SteamID { get; set; }
+        public string SteamName { get; set; }
+        public string IconPath { get; set; }
+        public string BannerPath { get; set; }
         public string ID { get; set; }
         public string Name { get; set; }
         public int Port { get; set; }

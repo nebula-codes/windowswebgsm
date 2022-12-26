@@ -1,0 +1,26 @@
+﻿@using windowswebgsm.Data
+
+
+@if (pid != null)
+{
+    
+} else
+{
+    <h3>Unable to fetch process information. Please contact administration.</h3>
+}
+
+
+
+
+@code {
+    [CascadingParameter]
+    public GameServer server { get; set; }
+    private int pid { get; set; }
+    protected override async Task OnInitializedAsync(){
+        if(server != null && server.PID != 0 || server.PID != null)
+        {
+            pid = server.PID;
+        }
+        
+    }
+}
