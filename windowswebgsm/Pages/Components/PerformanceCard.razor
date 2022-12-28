@@ -1,0 +1,61 @@
+﻿@using System.Diagnostics
+@using windowswebgsm.Data
+
+<MudCard>
+    @if (proc != null)
+    {
+        <MudCardContent>
+       <MudProgressLinear Color="Color.Info" Size="Size.Large" Value="25" Class="my-7">
+            <MudText Typo="Typo.subtitle1" Color="Color.Dark">
+                <b style="color:#a7a7aa; height:5em;">@used MB / 16000MB</b>
+                
+            </MudText>
+        </MudProgressLinear>
+        </MudCardContent>
+    } else
+    {
+        <h3>Fak u</h3>
+    }
+
+        
+    
+</MudCard>
+
+
+@code {
+    [CascadingParameter]
+    public GameServer server { get; set; }
+    private Process? proc;
+    private long? used;
+    private long? min;
+    private long? max;
+
+
+    protected override void OnInitialized()
+    {
+        max = 16000;
+
+
+        StartLoop();
+        StateHasChanged();
+
+
+    }
+
+    void StartLoop()
+    {
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+            proc = Process.GetProcessById(12464);
+            used = (proc.WorkingSet64 / 1024 / 1024);
+            min = used / max;
+
+            InvokeAsync(() =>
+            {
+
+                StateHasChanged();
+            });
+
+        }), null, 1000, 1000);
+    }
+}
