@@ -8,3 +8,6 @@
 * Easy to use UI to get servers up and running as easily as possible
 * A hobby project for now, might be more later on!
 
+![dash](https://user-images.githubusercontent.com/93218464/211142148-d4788ad4-7626-41e1-b525-362d20f78318.PNG)
+
+A lot is still to do. But this is a start to what could be a great project for self hosting
