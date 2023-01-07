@@ -59,7 +59,7 @@
                 Surface = "#27293d",
                 TableLines = "#a7a7aa",
                 LinesDefault = "#1e1e2f",
-                
+
 
 
         },
@@ -80,6 +80,13 @@
 
     protected override async Task OnInitializedAsync(){
         _isDark = false;
-        Servers = await Task.Run(() => gameServerService.GetAllGameServersAsync());
+        try
+        {
+            Servers = await Task.Run(() => gameServerService.GetAllGameServersAsync());
+        } catch (Exception e)
+        {
+            Servers = null;
+        }
+
     }
 }

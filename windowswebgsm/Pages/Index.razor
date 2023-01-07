@@ -1,7 +1,153 @@
 ﻿@page "/"
+@layout DashboardLayout
 
-<PageTitle>Index</PageTitle>
+<MudGrid Justify="Justify.FlexEnd">
+    <MudItem xs="12">
+        <MudText Style="padding-bottom:2em; color:white; text-align:center;font-family: 'Source Sans Pro', sans-serif; font-weight:700; font-size:36px">
+            WindowsWebGSM, An Open-Source game server manager made with ease of use in mind!
+            </MudText>
+    </MudItem>
+    
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor!</MudText>
-<MudAlert Severity="Severity.Normal">You can find documentation and examples on our website here: <MudLink Href="https://mudblazor.com" Typo="Typo.body2" Color="Color.Inherit"><b>www.mudblazor.com</b></MudLink></MudAlert>
+    <MudItem xs="12" Class="d-flex justify-center flex-grow-1">
+        <MudButton Href="https://www.buymeacoffee.com/NebulaCodes">
+            <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=NebulaCodes&button_colour=BD5FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" />
+        </MudButton>
+       
+
+    </MudItem>
+   
+    <MudItem xs="12" Style="padding-top:5em;" Class="d-flex justify-center flex-grow-1">
+        <MudCarousel Class="mud-width-full center" Style="height:450px; max-width:50%" TData="object" AutoCycle="true">
+            <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
+                <div class="d-flex flex-column flex-column justify-center" style="height:100%; background:url(/assets/images/mc-bg.jpg); background-size:cover;">
+                    
+                    <MudIcon Class="mx-auto" Size="@Size.Large" />
+                    <MudText Align="@Align.Center" Class="mx-auto"></MudText>
+                </div>
+            </MudCarouselItem>
+
+            <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
+                <div class="d-flex flex-column flex-column justify-center" style="text-align:center; height:100%; background:url(/assets/images/ark-bg.jpg); background-size:cover;">
+                    
+                    <MudIcon Class="mx-auto" Size="@Size.Large" />
+                    <MudText Align="@Align.Center" Class="mx-auto"></MudText>
+                </div>
+            </MudCarouselItem>
+
+                        <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
+                <div class="d-flex flex-column flex-column justify-center" style="height:100%; background:url(/assets/images/mc-bg.jpg); background-size:cover;">
+                    
+                    <MudIcon Class="mx-auto" Size="@Size.Large" />
+                    <MudText Align="@Align.Center" Class="mx-auto"></MudText>
+                </div>
+            </MudCarouselItem>
+
+            <MudCarouselItem Transition="Transition.Slide" Color="@Color.Primary">
+                <MudImage Src="/assets/images/ark-bg.jpg" Width="1075" Height="300"></MudImage>
+            </MudCarouselItem>
+        </MudCarousel>
+
+    </MudItem>
+
+
+
+
+    <MudItem xs="2">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Story of the day</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+            </MudCardActions>
+    </MudCard>
+    </MudItem>
+    <MudItem xs="2">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Story of the day</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+            </MudCardActions>
+    </MudCard>
+    </MudItem>
+    <MudItem xs="2">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Story of the day</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+            </MudCardActions>
+    </MudCard>
+    </MudItem>
+    <MudItem xs="2">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Story of the day</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+            </MudCardActions>
+    </MudCard>
+    </MudItem>
+
+    <MudItem xs="2">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Story of the day</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+            </MudCardActions>
+    </MudCard>
+    </MudItem>
+
+    <MudItem xs="2">
+        <MudCard>
+            <MudCardContent>
+                <MudText>Story of the day</MudText>
+                <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
+            </MudCardActions>
+    </MudCard>
+    </MudItem>
+
+
+    <MudItem xs="6">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=3</MudPaper>
+    </MudItem>
+    <MudItem xs="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=3</MudPaper>
+    </MudItem>
+    <MudItem xs="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=3</MudPaper>
+    </MudItem>
+    <MudItem xs="3">
+        <MudPaper Class="d-flex align-center justify-center mud-width-full py-8">xs=3</MudPaper>
+    </MudItem>
+</MudGrid>
+
+
+
+@code {
+    private MudCarousel<string> _carousel;
+    private bool _arrows = true;
+    private bool _bullets = true;
+    private bool _enableSwipeGesture = true;
+    private bool _autocycle = true;
+    private IList<string> _source = new List<string>() { "", "", "", "" };
+    private int selectedIndex = 2;
+
+  
+
+}
