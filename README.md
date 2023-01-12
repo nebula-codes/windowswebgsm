@@ -15,7 +15,7 @@ A lot is still to do. But this is a start to what could be a great project for s
 TODO:
 
 - [x] Set color palette for Mudblazor design
-- [ ] Server Management Dashboard Design
+- [x] Server Management Dashboard Design
 - [ ] Download Management
 - [ ] Process Management
 - [ ] Add Plugin Support
