@@ -18,7 +18,7 @@ A lot is still to do. But this is a start to what could be a great project for s
 - [x] Set color palette for Mudblazor design
 - [x] Server Management Dashboard Design
 - [ ] Download Management
-- [ ] Process Management
+- [ ] #3
 - [ ] Add Plugin Support
 - [ ] Add settings for directory management (bin, data, game servers, etc..)
 
