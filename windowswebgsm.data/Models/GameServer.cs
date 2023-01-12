@@ -19,6 +19,12 @@
             Deleting = 12
         }
 
+        public enum ServerType {
+            Steam = 0,
+            Java = 1,
+            Custom = 3,
+        }
+
         public string SteamID { get; set; }
         public string SteamName { get; set; }
         public string IconPath { get; set; }
@@ -42,6 +48,8 @@
         public bool UpdateOnStart { get; set; }
         public bool BackupOnStart { get; set; }
 
+
+        
         public GameServer()
         {
             this.FormattedUptime = TimeSpan.FromSeconds(this.Uptime).ToString(@"hh\:mm\:ss");

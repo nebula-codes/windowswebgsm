@@ -1,20 +1,21 @@
 ﻿@using System.Diagnostics
 @using windowswebgsm.Data
+@inject GameServerService gameServerService
 
 <MudCard>
     @if (proc != null)
     {
         <MudCardContent>
-       <MudProgressLinear Color="Color.Info" Size="Size.Large" Value="25" Class="my-7">
-            <MudText Typo="Typo.subtitle1" Color="Color.Dark">
-                <b style="color:#a7a7aa; height:5em;">@used MB / 16000MB</b>
-                
-            </MudText>
-        </MudProgressLinear>
+            <MudProgressLinear Color="Color.Info" Size="Size.Large" Value="25" Class="my-7">
+                <MudText Typo="Typo.subtitle1" Color="Color.Dark">
+                    <b style="color:#a7a7aa; height:5em;">@used MB / 16000MB</b>
+                    
+                </MudText>
+            </MudProgressLinear>
         </MudCardContent>
     } else
     {
-        <h3>Fak u</h3>
+        <h3>Process not found. Is the server started?</h3>
     }
 
         
@@ -35,18 +36,20 @@
     {
         max = 16000;
 
-
-        StartLoop();
+        if(server.PID != null){
+            StartLoop();
+        }
+        
         StateHasChanged();
-
-
     }
+
+    
 
     void StartLoop()
     {
         var timer = new Timer(new TimerCallback(_ =>
         {
-            proc = Process.GetProcessById(13768);
+            proc = await Process.GetProcessById(server.PID);
             used = (proc.WorkingSet64 / 1024 / 1024);
             min = used / max;
 
