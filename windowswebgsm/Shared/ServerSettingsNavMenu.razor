@@ -1,12 +1,20 @@
-﻿
+﻿@inject NavigationManager UriHelper
+
+
 <MudNavMenu Margin="Margin.Dense" Class="pa-2" Rounded="true">
 
         <MudSpacer/>
         <MudNavLink Href="/servers" Icon="@Icons.Filled.ArrowBack">Back</MudNavLink>
-
+        <MudNavLink @onclick="( () => Navigate(id))" Icon="@Icons.Filled.SettingsApplications">General Settings</MudNavLink>
 </MudNavMenu>
 
 
 @code {
+    [Parameter]
+    public string id { get; set; }
 
+    void Navigate(string lid)
+    {
+        UriHelper.NavigateTo($"servers/{lid}/settings");
+    }
 }

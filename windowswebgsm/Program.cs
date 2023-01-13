@@ -7,6 +7,7 @@ using windowswebgsm.data;
 using Microsoft.EntityFrameworkCore;
 using windowswebgsm.data.Services;
 using windowswebgsm.data.Logic;
+using MudBlazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,20 @@ StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configurat
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(config =>
+{
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+
+    config.SnackbarConfiguration.PreventDuplicates = true;
+    config.SnackbarConfiguration.NewestOnTop = false;
+    config.SnackbarConfiguration.ShowCloseIcon = true;
+    config.SnackbarConfiguration.VisibleStateDuration = 1500;
+    config.SnackbarConfiguration.HideTransitionDuration = 100;
+    config.SnackbarConfiguration.ShowTransitionDuration = 100;
+    config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+});
+
 builder.Services.AddScoped<GameServerService>();
 
 

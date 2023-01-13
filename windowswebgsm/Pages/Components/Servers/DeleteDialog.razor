@@ -1,0 +1,47 @@
+﻿@using System.Net.NetworkInformation;
+@using System.Net.Sockets;
+@using windowswebgsm.Data;
+@using windowswebgsm.data.Models;
+@using windowswebgsm.data.Services;
+@inject GameServerService gameServerService
+
+<MudDialog>
+    <DialogContent>
+       Delete Selected Servers
+    </DialogContent>
+
+
+
+
+
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="DeleteServers">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+
+    private async Task<bool> DeleteServers()
+    {
+
+
+
+        return true;
+    }
+
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+
+}
+

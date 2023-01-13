@@ -1,10 +1,12 @@
 ﻿
 @using static MudBlazor.CategoryTypes;
+@using System.Diagnostics;
 @using windowswebgsm.Data
 @using System.Text.Json
 @using System.Net.Http.Json
 @inject ISnackbar Snackbar
 @inject IDialogService Dialog
+@inject ISnackbar Snackbar
 
 <style type="text/css">
     .mud-checkbox-input {
@@ -21,7 +23,7 @@
     <MudButton Variant="Variant.Filled" OnClick="@(() => StartServer(@selectedItemsString))" StartIcon="@Icons.Material.Filled.PlayArrow" Color="Color.Success">Start</MudButton>
     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Stop" Color="Color.Warning">Stop</MudButton>
     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.RestartAlt" Color="Color.Info">Restart</MudButton>
-    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.StopCircle" Color="Color.Error">Kill</MudButton>
+    <MudButton OnClick="@KillServer" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.StopCircle" Color="Color.Error">Kill</MudButton>
 
 
 
@@ -139,11 +141,37 @@
         Snackbar.Add($"Following Servers are starting: {selectedItemsString}", Severity.Success);
     }
 
-    private void StopServer()
+    private void KillServer()
     {
+        foreach(GameServer server in selectedItems)
+        {
+            Process proc;
+            Snackbar.Add("Killing the following server: " + server.Name, Severity.Warning);
+            try
+            {
+                if (Process.GetProcessById(server.PID) != null)
+                {
+                    server.Status = GameServer.ServerStatus.Stopping;
 
+                    proc = Process.GetProcessById(server.PID);
+
+                    proc.Kill();
+
+                    server.Status = GameServer.ServerStatus.Stopped;
+                }
+             
+                
+                
+
+            } catch (Exception ex)
+            {
+                Snackbar.Add("Failed killing the following server: " + server.Name + "\nReason: " + ex.Message, Severity.Error);
+            }
+        }
 
     }
+
+    
 
     private void RestartServer()
     {

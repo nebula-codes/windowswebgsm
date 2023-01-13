@@ -36,6 +36,11 @@
 </MudLayout>
 
 @code {
+
+
+    [Parameter]
+    public string id { get; set; }
+
     public IEnumerable<GameServer> Servers = new List<GameServer>();
 
 
@@ -53,7 +58,7 @@
                 Surface = "#27293d",
                 TableLines = "#a7a7aa",
                 LinesDefault = "#1e1e2f",
-                
+
 
 
         },
@@ -74,6 +79,7 @@
 
     protected override async Task OnInitializedAsync(){
         _isDark = false;
-        
+
+        Console.WriteLine("Server ID: " + id);
     }
 }
