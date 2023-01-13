@@ -13,6 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="MudBlazor" Version="6.1.7" />
+    <PackageReference Include="XtermBlazor" Version="1.6.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,142 @@
+﻿@using System.Net.NetworkInformation;
+@using System.Net.Sockets;
+@using windowswebgsm.Data;
+@using windowswebgsm.data.Models;
+@using windowswebgsm.data.Services;
+@inject GameServerService gameServerService
+
+<MudDialog>
+    <DialogContent>
+        <MudSelect T="SupportedGameServers.Games" ValueChanged="OnGameValueChanged" Style="color:white;" T="string" Label="Game..." AnchorOrigin="Origin.BottomCenter">
+            @foreach (SupportedGameServers.Games game in (SupportedGameServers.Games[])Enum.GetValues(typeof(SupportedGameServers.Games)))
+            {
+                <MudSelectItem Value="@(game)">@game.ToDescription()</MudSelectItem>
+            }
+           
+        </MudSelect>
+
+
+
+        @if (selectedStage is not SupportedGameServers.Games.None)
+        {
+            <br />
+            <MudTextField @bind-Value="ServerName" Label="Server Name" Variant="Variant.Outlined"></MudTextField>
+
+            <MudSelect ValueChanged="OnIPValueChanged" T="string" Variant="Variant.Outlined" Label="IP Address">
+                @foreach(var v in Addresses)
+                {
+                    <MudSelectItem T="string" Value="@v">@v</MudSelectItem>
+                }
+            </MudSelect>
+
+
+            <br />
+            <MudAlert Severity="Severity.Info">@(selectedStage.ToDescription()) was selected</MudAlert>
+        }
+    </DialogContent>
+
+
+
+
+
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="CreateServer">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private string[] Addresses { get; set; }
+    private string ServerName { get; set; }
+    private string IP { get; set; }
+    private SupportedGameServers.Games selectedStage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Addresses = GetAllLocalIPv4(NetworkInterfaceType.Ethernet);
+    }
+
+    private async Task<bool> CreateServer()
+    {
+        GameServer newServer = new();
+
+        int appid = (int)selectedStage;
+
+        newServer.ID = Guid.NewGuid().ToString();
+        newServer.Address = IP;
+        newServer.Name = ServerName;
+        newServer.SteamName = selectedStage.ToDescription();
+        newServer.SteamID = appid.ToString();
+        newServer.AutoRestart = false;
+        newServer.AutoStart = false;
+        newServer.AutoUpdate = false;
+        newServer.MaxPlayers = 10;
+        newServer.IconPath = "/assets/images/" + selectedStage + ".png";
+        newServer.Players = 0;
+        newServer.BannerPath = "";
+        newServer.Uptime = 0;
+        newServer.Map = "Save";
+        newServer.PID = 0;
+        newServer.Port = 0;
+        newServer.QueryPort = "0";
+
+        bool res = await gameServerService.InsertGameServerAsync(newServer);
+
+        Submit();
+        StateHasChanged();
+        return true;
+    }
+
+
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+
+    
+
+    GameServer gameServer = new();
+
+
+    
+    readonly Func<SupportedGameServers.Games, string> converter = p => p.ToString();
+
+    private void OnGameValueChanged(SupportedGameServers.Games selected)
+    {
+        selectedStage = selected;
+    }
+
+    private void OnNameValueChange(string name)
+    {
+        ServerName = name;
+    }
+    private void OnIPValueChanged(string ip)
+    {
+        IP = ip;
+    }
+
+
+
+    public string[] GetAllLocalIPv4(NetworkInterfaceType _type)
+    {
+        List<string> ipAddrList = new List<string>();
+        foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
+        {
+            if (item.NetworkInterfaceType == _type && item.OperationalStatus == OperationalStatus.Up)
+            {
+                foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                {
+                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        ipAddrList.Add(ip.Address.ToString());
+                    }
+                }
+            }
+        }
+        ipAddrList.Add("0.0.0.0");
+        return ipAddrList.ToArray();
+    }
+}
+

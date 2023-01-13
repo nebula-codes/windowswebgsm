@@ -1,5 +1,6 @@
 ﻿@using System.Diagnostics
 @using windowswebgsm.Data
+@using windowswebgsm.data.Services;
 @inject GameServerService gameServerService
 
 <MudCard>
@@ -15,7 +16,7 @@
         </MudCardContent>
     } else
     {
-        <h3>Process not found. Is the server started?</h3>
+        <h3>Server is not started.</h3>
     }
 
         
@@ -36,7 +37,7 @@
     {
         max = 16000;
 
-        if(server.PID != null){
+        if(server.Status != GameServer.ServerStatus.Stopped){
             StartLoop();
         }
         
@@ -49,7 +50,7 @@
     {
         var timer = new Timer(new TimerCallback(_ =>
         {
-            proc = await Process.GetProcessById(server.PID);
+            proc = Process.GetProcessById(server.PID);
             used = (proc.WorkingSet64 / 1024 / 1024);
             min = used / max;
 

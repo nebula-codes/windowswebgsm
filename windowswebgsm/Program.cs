@@ -6,6 +6,7 @@ using MudBlazor.Services;
 using windowswebgsm.data;
 using Microsoft.EntityFrameworkCore;
 using windowswebgsm.data.Services;
+using windowswebgsm.data.Logic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,5 +47,13 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+Helper helper = new();
+helper.GenerateDirectories();
+
+if (!File.Exists(Path.Combine(helper.SteamBin, "steamcmd.zip")))
+{
+    await helper.DownloadSteamCMD();
+}
 
 app.Run();

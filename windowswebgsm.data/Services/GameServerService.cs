@@ -21,7 +21,15 @@ namespace windowswebgsm.data.Services
         public async Task<bool> InsertGameServerAsync(GameServer gameServer)
         {
             //Validate if server already exists with same name
+            List<GameServer> existingServers = await GetAllGameServersAsync();
 
+            foreach(var server in existingServers)
+            {
+                if(server.Name == gameServer.Name)
+                {
+                    return false;
+                }
+            }
             //Check if Port is already in use
 
 

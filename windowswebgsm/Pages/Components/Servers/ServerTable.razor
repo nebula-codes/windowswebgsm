@@ -1,9 +1,10 @@
 ﻿
+@using static MudBlazor.CategoryTypes;
 @using windowswebgsm.Data
 @using System.Text.Json
 @using System.Net.Http.Json
 @inject ISnackbar Snackbar
-
+@inject IDialogService Dialog
 
 <style type="text/css">
     .mud-checkbox-input {
@@ -25,6 +26,7 @@
 
 
     <div style="float:right;">
+        <MudButton OnClick="@((e) => OpenCreateDialog(maxWidth))" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Success">Create New Server</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Monitor" Color="Color.Dark">Toggle Console</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Update" Color="Color.Dark">Update</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Backup" Color="Color.Dark">Backup</MudButton>
@@ -40,7 +42,7 @@
         <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
-        <MudTh>ID</MudTh>
+        @*<MudTh>ID</MudTh>*@
         <MudTh>PID</MudTh>
         <MudTh><MudTableSortLabel SortBy="new Func<GameServer, object>(x=>x.Status)">Status</MudTableSortLabel></MudTh>
         <MudTh>Name</MudTh>
@@ -52,7 +54,7 @@
         <MudTh>Uptime</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="ID">@context.ID</MudTd>
+        @*<MudTd DataLabel="ID">@context.ID</MudTd>*@
         <MudTd DataLabel="PID">@context.PID</MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
@@ -80,7 +82,7 @@
 </div>
 
 
-@code {
+    @code {
     [CascadingParameter]
     public IEnumerable<GameServer> Servers { get; set; }
 
@@ -112,6 +114,13 @@
         if ($"{server.Address}".Contains(searchString))
             return true;
         return false;
+    }
+
+
+    DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+    private void OpenCreateDialog(DialogOptions options)
+    {
+        Dialog.Show<CreateDialog>("Create New Server", options);
     }
 
 

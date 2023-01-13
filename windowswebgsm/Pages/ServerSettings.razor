@@ -1,6 +1,7 @@
 ﻿@page "/servers/{id}"
+@using System.Diagnostics.CodeAnalysis;
 @using windowswebgsm.Data
-@using windowswebgsm.Pages.Components
+@using windowswebgsm.Pages.Components.ServerSettings
 @using windowswebgsm.data.Services
 @layout ServerSettingsLayout
 @inject GameServerService gameServerService
@@ -17,6 +18,29 @@
                  <PerformanceCard/>
             </MudItem>
 
+
+
+            <MudItem xs="12">
+                <Xterm @ref="_terminal" Options="_options" OnFirstRender="@OnFirstRender"/>
+            </MudItem>
+
+
+
+            <MudItem xs="12" Style="background-color:black;">
+                <MudTextField T="string"
+                          @ref="_commandTextField"
+                          Immediate="true"
+                          Variant="Variant.Outlined"
+                          Style="color:white;"
+                          Margin="Margin.Dense"
+                          Placeholder="@(server.Status == GameServer.ServerStatus.Started ? "Command" : string.Empty)"
+                          IconSize="Size.Small"
+                          Adornment="Adornment.End"
+                          AdornmentIcon="@Icons.Material.Filled.Send"
+                          AdornmentColor="Color.Info"
+                          Disabled="@(server.Status != GameServer.ServerStatus.Started)" />
+            </MudItem>
+            
              <MudItem xs="12" sm="12">
                  <MudPaper Elevation="25">
                     <MudToolBar>
@@ -67,9 +91,36 @@ else
 
     private GameServer server { get; set; }
 
+    private MudTextField<string>? _commandTextField;
+
+
     protected override async Task OnInitializedAsync()
     {
-        
+
         server = await Task.Run(() => gameServerService.GetGameServerById(id));
+    }
+
+
+
+
+    private Xterm? _terminal;
+
+    private TerminalOptions _options = new TerminalOptions
+        {
+            RendererType = RendererType.Canvas,
+            Rows = 20,
+            Columns = 248,
+            CursorBlink = true,
+            CursorStyle = CursorStyle.Bar,
+            WindowsMode = false,
+            Theme =
+            {
+                Background = "#000",
+            },
+        };
+
+    private async Task OnFirstRender()
+    {
+        await _terminal.WriteLine("Hello World");
     }
 }
