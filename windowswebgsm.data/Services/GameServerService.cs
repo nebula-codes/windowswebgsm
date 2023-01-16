@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using windowswebgsm.Data;
+@inject GameServerService gameServerService
 
 namespace windowswebgsm.data.Services
 {
@@ -106,6 +107,11 @@ namespace windowswebgsm.data.Services
             await _appDbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> KillGameServerAsync(GameServer gameServer) {
+            return gameServerService.KillGameServerAsync();
+        }
+
         #endregion
 
 

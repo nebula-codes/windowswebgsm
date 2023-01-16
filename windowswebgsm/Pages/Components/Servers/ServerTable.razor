@@ -141,7 +141,7 @@
         Snackbar.Add($"Following Servers are starting: {selectedItemsString}", Severity.Success);
     }
 
-    private void KillServer()
+    private async Task<bool> KillServer()
     {
         foreach(GameServer server in selectedItems)
         {
@@ -149,16 +149,7 @@
             Snackbar.Add("Killing the following server: " + server.Name, Severity.Warning);
             try
             {
-                if (Process.GetProcessById(server.PID) != null)
-                {
-                    server.Status = GameServer.ServerStatus.Stopping;
-
-                    proc = Process.GetProcessById(server.PID);
-
-                    proc.Kill();
-
-                    server.Status = GameServer.ServerStatus.Stopped;
-                }
+                
              
                 
                 

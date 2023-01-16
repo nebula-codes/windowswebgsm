@@ -19,8 +19,6 @@
             Deleting = 12
         }
 
-        
-
         public enum ServerType {
             Steam = 0,
             Java = 1,

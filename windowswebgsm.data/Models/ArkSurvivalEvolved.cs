@@ -3,6 +3,7 @@ namespace windowswebgsm.Data {
         
         public string QueryPort {get; set;} = "27015";
         public string GamePort{ get; set;} = 27016;
+        public string LaunchArguments {get;set;};
 
         public ArkSurvivalEvolved() {
             
@@ -25,7 +26,7 @@ namespace windowswebgsm.Data {
         }
 
         public List<string> GetDefaultLaunchArguments() {
-
+            return this.LaunchArguments;
         }
 
     }
