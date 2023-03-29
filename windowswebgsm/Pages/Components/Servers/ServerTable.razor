@@ -6,9 +6,8 @@
 @using System.Net.Http.Json
 @inject ISnackbar Snackbar
 @inject IDialogService Dialog
-@inject ISnackbar Snackbar
 
-<style type="text/css">
+<style>
     .mud-checkbox-input {
         border: white;
     }
@@ -20,7 +19,7 @@
 <MudPaper Style="margin-bottom:1em; margin-top:1em; padding:10px;">
 
 
-    <MudButton Variant="Variant.Filled" OnClick="@(() => StartServer(@selectedItemsString))" StartIcon="@Icons.Material.Filled.PlayArrow" Color="Color.Success">Start</MudButton>
+    <MudButton Variant="Variant.Filled" OnClick="@(() => StartServer(_selectedItemsString))" StartIcon="@Icons.Material.Filled.PlayArrow" Color="Color.Success">Start</MudButton>
     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Stop" Color="Color.Warning">Stop</MudButton>
     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.RestartAlt" Color="Color.Info">Restart</MudButton>
     <MudButton OnClick="@KillServer" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.StopCircle" Color="Color.Error">Kill</MudButton>
@@ -28,7 +27,7 @@
 
 
     <div style="float:right;">
-        <MudButton OnClick="@((e) => OpenCreateDialog(maxWidth))" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Success">Create New Server</MudButton>
+        <MudButton OnClick="@((e) => OpenCreateDialog(_maxWidth))" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Success">Create New Server</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Monitor" Color="Color.Dark">Toggle Console</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Update" Color="Color.Dark">Update</MudButton>
         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Backup" Color="Color.Dark">Backup</MudButton>
@@ -37,11 +36,11 @@
 </MudPaper>
 
 
-<MudTable MultiSelection="true" Items="@Servers" Square="@square" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<GameServer,bool>(FilterFunc1)" @bind-SelectedItems="selectedItems">
+<MudTable MultiSelection="true" Items="@Servers" Square="@_square" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped" Filter="new Func<GameServer,bool>(FilterFunc1)" @bind-SelectedItems="_selectedItems">
     <ToolBarContent>
         <MudText Typo="Typo.h6">Game Servers</MudText>
         <MudSpacer />
-        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        <MudTextField @bind-Value="_searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         @*<MudTh>ID</MudTh>*@
@@ -73,13 +72,13 @@
 </MudTable>
 
 <div class="d-flex flex-wrap mt-4">
-    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+    <MudSwitch @bind-Checked="@_hover" Color="Color.Primary">Hover</MudSwitch>
+    <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary">Dense</MudSwitch>
+    <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary">Striped</MudSwitch>
+    <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning">Bordered</MudSwitch>
     <MudSpacer />
     <div style="min-width:200px;">
-        <MudText Inline="true">Selected items: @(selectedItems==null ? "" : string.Join(", ", selectedItems.OrderBy(x=>x.Name).Select(x=>x.Name)))</MudText>
+        <MudText Inline="true">Selected items: @(_selectedItems==null ? "" : string.Join(", ", _selectedItems.OrderBy(x=>x.Name).Select(x=>x.Name)))</MudText>
     </div>
 </div>
 
@@ -89,25 +88,25 @@
     public IEnumerable<GameServer> Servers { get; set; }
 
 
-    private bool square = true;
-    private bool dense = false;
-    private bool hover = true;
-    private bool striped = false;
-    private bool bordered = false;
-    private string searchString1 = "";
-    private string searchString2 = "";
-    private Data.GameServer selectedItem1 = null;
-    private Data.GameServer selectedItem2 = null;
+    private bool _square = true;
+    private bool _dense = false;
+    private bool _hover = true;
+    private bool _striped = false;
+    private bool _bordered = false;
+    private string _searchString1 = "";
+    private string _searchString2 = "";
+    private GameServer _selectedItem1 = null;
+    private GameServer _selectedItem2 = null;
 
-    private HashSet<GameServer> selectedItems = new HashSet<GameServer>();
-    private string selectedItemsString = "";
+    private HashSet<GameServer> _selectedItems = new HashSet<GameServer>();
+    private string _selectedItemsString = "";
 
 
 
-    private bool FilterFunc1(Data.GameServer server) => FilterFunc(server, searchString1);
-    private bool FilterFunc2(Data.GameServer server) => FilterFunc(server, searchString2);
+    private bool FilterFunc1(GameServer server) => FilterFunc(server, _searchString1);
+    private bool FilterFunc2(GameServer server) => FilterFunc(server, _searchString2);
 
-    private bool FilterFunc(Data.GameServer server, string searchString)
+    private bool FilterFunc(GameServer server, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
@@ -119,7 +118,7 @@
     }
 
 
-    DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+    DialogOptions _maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium, FullWidth = true };
     private void OpenCreateDialog(DialogOptions options)
     {
         Dialog.Show<CreateDialog>("Create New Server", options);
@@ -134,16 +133,16 @@
         Snackbar.Configuration.HideTransitionDuration = 500;
         Snackbar.Configuration.ShowTransitionDuration = 500;
 
-        selectedItemsString = "";
-        selectedItemsString += string.Join(", ", selectedItems.OrderBy(x=>x.Name).Select(x=>x.Name));
+        _selectedItemsString = "";
+        _selectedItemsString += string.Join(", ", _selectedItems.OrderBy(x=>x.Name).Select(x=>x.Name));
 
 
-        Snackbar.Add($"Following Servers are starting: {selectedItemsString}", Severity.Success);
+        Snackbar.Add($"Following Servers are starting: {_selectedItemsString}", Severity.Success);
     }
 
     private void KillServer()
     {
-        foreach(GameServer server in selectedItems)
+        foreach(GameServer server in _selectedItems)
         {
             Process proc;
             Snackbar.Add("Killing the following server: " + server.Name, Severity.Warning);
